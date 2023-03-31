@@ -7,8 +7,6 @@ import io.temporal.workflow.WorkflowMethod;
 @WorkflowInterface
 public interface BookingWorkflow {
 
-    public static final String QUEUE_NAME = "BOOKING_QUEUE";
-
     @WorkflowMethod
     String startBookingEvent(String bookingId);
 

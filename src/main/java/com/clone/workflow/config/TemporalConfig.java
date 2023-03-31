@@ -14,14 +14,14 @@ import io.temporal.worker.WorkerFactory;
 @Configuration
 public class TemporalConfig {
 
-	private String temporalServiceAddress = "127.0.0.1:7233";
+	private static final String temporalServiceAddress = "127.0.0.1:7233";
 
-	private String temporalNamespace = "default";
+	private static final String temporalNamespace = "default";
 
 	@Bean
 	public WorkflowServiceStubs workflowServiceStubs() {
 		return WorkflowServiceStubs
-				.newInstance(WorkflowServiceStubsOptions.newBuilder().setTarget(temporalServiceAddress).build());
+				.newServiceStubs(WorkflowServiceStubsOptions.newBuilder().setTarget(temporalServiceAddress).build());
 	}
 
 	@Bean
@@ -36,7 +36,7 @@ public class TemporalConfig {
 	}
 
 	@Bean
-	public BookingActivityImpl SignUpActivity() {
+	public BookingActivityImpl bookingActivity() {
 		return new BookingActivityImpl();
 	}
 

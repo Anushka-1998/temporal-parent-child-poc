@@ -1,6 +1,6 @@
 package com.clone.workflow.service;
 
-
+import com.clone.workflow.constants.ActivityPlanConstants;
 import com.clone.workflow.temporal.ActivityPlanWorkflow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,9 @@ public class ActivityPlanService {
 		workflow.startActivityPlanWorkflow(workflowId);
 	}
 
-	public ActivityPlanWorkflow createWorkFlowConnection(String id) {
-		WorkflowOptions options = WorkflowOptions.newBuilder().setTaskQueue(ActivityPlanWorkflow.QUEUE_NAME)
-				.setWorkflowId("Parent_" + id).build();
+	public ActivityPlanWorkflow createWorkFlowConnection(String workflowId) {
+		WorkflowOptions options = WorkflowOptions.newBuilder().setTaskQueue(ActivityPlanConstants.ACTIVITY_PLAN_QUEUE_NAME)
+				.setWorkflowId("Parent_" + workflowId).build();
 		return workflowClient.newWorkflowStub(ActivityPlanWorkflow.class, options);
 	}
 
