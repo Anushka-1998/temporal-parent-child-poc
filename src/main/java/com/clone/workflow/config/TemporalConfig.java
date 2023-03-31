@@ -1,11 +1,9 @@
 package com.clone.workflow.config;
 
+import com.clone.workflow.temporal.BookingActivityImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
-
-import com.clone.workflow.temporal.ActivityImpl;
-
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowClientOptions;
 import io.temporal.serviceclient.WorkflowServiceStubs;
@@ -38,8 +36,8 @@ public class TemporalConfig {
 	}
 
 	@Bean
-	public ActivityImpl SignUpActivity() {
-		return new ActivityImpl();
+	public BookingActivityImpl SignUpActivity() {
+		return new BookingActivityImpl();
 	}
 
 }

@@ -1,10 +1,9 @@
 package com.clone.workflow.service;
 
+
+import com.clone.workflow.temporal.ActivityPlanWorkflow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.clone.workflow.temporal.WorkFlow;
-
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import io.temporal.serviceclient.WorkflowServiceStubs;
@@ -19,11 +18,11 @@ public class OrderService {
 	WorkflowClient workflowClient;
 
 	public void placeOrder(String workflowId) {
-		WorkFlow workflow = createWorkFlowConnection(workflowId);
-		WorkflowClient.start(workflow::startApprovalWorkflow);
+		ActivityPlanWorkflow workflow = createWorkFlowConnection(workflowId);
+		workflow.startActivityPlanWorkflow(workflowId);
 	}
 
-	public void makeOrderAccepted(String workflowId) {
+	/*public void makeOrderAccepted(String workflowId) {
 		WorkFlow workflow = workflowClient.newWorkflowStub(WorkFlow.class, "Order_" + workflowId);
 		workflow.signalOrderAccepted();
 	}
@@ -36,12 +35,12 @@ public class OrderService {
 	public void makeOrderDelivered(String workflowId) {
 		WorkFlow workflow = workflowClient.newWorkflowStub(WorkFlow.class, "Order_" + workflowId);
 		workflow.signalOrderDelivered();
-	}
+	}*/
 
-	public WorkFlow createWorkFlowConnection(String id) {
-		WorkflowOptions options = WorkflowOptions.newBuilder().setTaskQueue(WorkFlow.QUEUE_NAME)
-				.setWorkflowId("Order_" + id).build();
-		return workflowClient.newWorkflowStub(WorkFlow.class, options);
+	public ActivityPlanWorkflow createWorkFlowConnection(String id) {
+		WorkflowOptions options = WorkflowOptions.newBuilder().setTaskQueue(ActivityPlanWorkflow.QUEUE_NAME)
+				.setWorkflowId("Parent_" + id).build();
+		return workflowClient.newWorkflowStub(ActivityPlanWorkflow.class, options);
 	}
 
 }
