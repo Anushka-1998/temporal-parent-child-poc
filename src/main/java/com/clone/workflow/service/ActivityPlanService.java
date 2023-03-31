@@ -6,14 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
-import io.temporal.serviceclient.WorkflowServiceStubs;
 
 @Service
-public class OrderService {
-
-	@Autowired
-	WorkflowServiceStubs workflowServiceStubs;
-
+public class ActivityPlanService {
 	@Autowired
 	WorkflowClient workflowClient;
 
@@ -21,21 +16,6 @@ public class OrderService {
 		ActivityPlanWorkflow workflow = createWorkFlowConnection(workflowId);
 		workflow.startActivityPlanWorkflow(workflowId);
 	}
-
-	/*public void makeOrderAccepted(String workflowId) {
-		WorkFlow workflow = workflowClient.newWorkflowStub(WorkFlow.class, "Order_" + workflowId);
-		workflow.signalOrderAccepted();
-	}
-
-	public void makeOrderPickedUp(String workflowId) {
-		WorkFlow workflow = workflowClient.newWorkflowStub(WorkFlow.class, "Order_" + workflowId);
-		workflow.signalOrderPickedUp();
-	}
-
-	public void makeOrderDelivered(String workflowId) {
-		WorkFlow workflow = workflowClient.newWorkflowStub(WorkFlow.class, "Order_" + workflowId);
-		workflow.signalOrderDelivered();
-	}*/
 
 	public ActivityPlanWorkflow createWorkFlowConnection(String id) {
 		WorkflowOptions options = WorkflowOptions.newBuilder().setTaskQueue(ActivityPlanWorkflow.QUEUE_NAME)
